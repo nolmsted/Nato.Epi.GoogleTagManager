@@ -1,0 +1,76 @@
+﻿@using Nato.Epi.GoogleTagManager.ViewModels
+
+@model GoogleTagManagerAdminViewModel
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Google Tag Manager Configuration</h1>
+                <hr />
+                @if (!Model.Sites.Any())
+                {
+                    <h4>No sites configured!</h4>
+                }
+                <p>@TempData["status"]</p>
+                @foreach (var site in Model.Sites)
+                {
+                    <div class="row">
+                        @using (Html.BeginForm("Index", "GoogleTagManagerAdmin", FormMethod.Post, new { @class = "form-inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("siteid", site.SiteId)
+                            @Html.Hidden("datastoreId", site.DatastoreId)
+                            <div class="form-group">
+                                @Html.TextBox("siteName", site.SiteName, new { disabled = true, @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="accountKey" value="@site.DatastoreAccountKey" placeholder="Account Key" />
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" style="background-color: #E04622; color: #fff;">Save</button>
+                            </div>
+                        }
+                    </div>
+                    <p></p>
+
+                    foreach (var langSite in site.LangSites)
+                    {
+                        <div class="row">
+                            @using (Html.BeginForm("Index", "GoogleTagManagerAdmin", FormMethod.Post, new { @class = "form-inline" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("siteid", langSite.SiteId)
+                                @Html.Hidden("datastoreId", langSite.DatastoreId)
+                                @Html.Hidden("langid", langSite.LangId)
+                                <div class="form-group col-md-1">&nbsp;</div>
+                                <div class="form-group">
+                                    @Html.TextBox("langName", langSite.LangName, new { disabled = true, @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="accountKey" value="@langSite.DatastoreAccountKey" placeholder="Account Key" />
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" style="background-color: #E04622; color: #fff;">Save</button>
+                                </div>
+                            }
+                        </div>
+                        <p></p>
+                    }
+                    <hr />
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Nato.Epi.GoogleTagManager</id>
+    <version>$version$</version>
+    <title>Nato.Epi.GoogleTagManager</title>
+    <authors>Nate Olmsted (Siteworx)</authors>
+    <owners>Siteworx</owners>
+    <!--<projectUrl></projectUrl>
+    <iconUrl></iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provides configuration admin view for Google Tag Manager.</description>
+    <releaseNotes>Added multi-language support</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Nato.Epi.GoogleTagManager</tags>
+    <dependencies>
+        <dependency id="Episerver.Cms.Core" version="10.0" />        
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Debug\Nato.Epi.GoogleTagManager.???" target="lib\net452"/>
+    <file src="modules\**" target="content\modules"/>
+  </files>
+</package>
